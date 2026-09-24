@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Grupo Modernos">
+<meta name="theme-color" content="#1C201F">
+<title>Grupo Modernos</title>
+<style>
+  :root {
+    --tinta: #1C201F; --bronze: #BC7B39; --bronze-claro: #E3C49F; --fundo: #F6F2EC;
+    --linha: #E2DBD0; --cinza: #6B6F6E; --branco: #fff;
+    --ok: #1a7f37; --ok-bg: #e6f4ea; --aviso: #9a6700; --aviso-bg: #fff4d6; --atraso: #b42318; --atraso-bg: #fdecea;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; font-family: "Aptos", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; background: var(--fundo); color: var(--tinta); font-size: 15px; }
+  header { background: var(--tinta); color: #fff; padding: calc(14px + env(safe-area-inset-top)) 16px 12px; position: sticky; top: 0; z-index: 5; border-bottom: 3px solid var(--bronze); }
+  header h1 { margin: 0; font-size: 18px; letter-spacing: .3px; }
+  header p { margin: 2px 0 0; color: var(--bronze-claro); font-size: 12.5px; }
+  nav { display: flex; gap: 6px; margin-top: 10px; }
+  nav button { flex: 1; min-width: 0; background: transparent; color: #cfcac2; border: 1px solid #3a3f3d; border-radius: 8px; padding: 8px 4px; font: inherit; font-size: 13.5px; }
+  nav button.on { background: var(--bronze); color: #fff; border-color: var(--bronze); }
+  main { padding: 14px 14px 90px; max-width: 640px; margin: 0 auto; }
+  .card { background: #fff; border: 1px solid var(--linha); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+  .mesnav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .mesnav button { background: #fff; border: 1px solid var(--linha); border-radius: 10px; width: 44px; height: 40px; font-size: 18px; }
+  .mesnav .t { text-align: center; }
+  .mesnav .t b { display: block; font-size: 17px; text-transform: capitalize; }
+  .mesnav .t span { font-size: 12.5px; color: var(--cinza); }
+  .destaque { display: flex; gap: 12px; align-items: center; }
+  .destaque .bola { width: 12px; height: 44px; border-radius: 6px; flex: none; }
+  .destaque small { color: var(--cinza); display: block; font-size: 12.5px; }
+  .destaque b { font-size: 18px; }
+  .destaque > div:not(.valor) { min-width: 0; }
+  .destaque .valor { margin-left: auto; text-align: right; flex: none; }
+  .barra { height: 8px; background: #eee8df; border-radius: 4px; overflow: hidden; margin: 12px 0 4px; }
+  .barra i { display: block; height: 100%; background: var(--ok); border-radius: 4px; }
+  .legenda { font-size: 12.5px; color: var(--cinza); display: flex; justify-content: space-between; }
+  .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 11px 0; border-top: 1px solid var(--linha); }
+  .linha .acoes { flex-basis: 100%; padding-left: 20px; }
+  .linha .acoes .btn { flex: 1; }
+  .linha:first-child { border-top: 0; }
+  .ponto { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .quem { flex: 1; min-width: 0; }
+  .quem b { display: block; }
+  .quem small { color: var(--cinza); font-size: 12.5px; }
+  .selo { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+  .selo.ok { color: var(--ok); background: var(--ok-bg); }
+  .selo.aberto { color: var(--aviso); background: var(--aviso-bg); }
+  .selo.atraso { color: var(--atraso); background: var(--atraso-bg); }
+  .acoes { display: flex; gap: 6px; }
+  .btn { border: 1px solid var(--linha); background: #fff; border-radius: 9px; padding: 8px 10px; font: inherit; font-size: 13px; color: var(--tinta); }
+  .btn.pri { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .btn.bronze { background: var(--bronze); color: #fff; border-color: var(--bronze); }
+  .btn.largo { width: 100%; padding: 12px; font-size: 15px; margin-top: 8px; }
+  h2 { font-size: 15px; margin: 18px 4px 8px; color: var(--cinza); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .grade { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .quadro { background: #fff; border: 1px solid var(--linha); border-radius: 10px; padding: 10px 12px; }
+  .quadro b { display: block; font-size: 17px; }
+  .quadro small { color: var(--cinza); font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  td, th { padding: 7px 4px; border-bottom: 1px solid var(--linha); text-align: left; }
+  th { color: var(--cinza); font-weight: 600; font-size: 12px; }
+  td.r, th.r { text-align: right; }
+  input, textarea { font: inherit; width: 100%; padding: 10px; border: 1px solid var(--linha); border-radius: 9px; background: #fff; }
+  label { font-size: 12.5px; color: var(--cinza); display: block; margin: 10px 0 4px; }
+  dialog { border: 0; border-radius: 16px; padding: 18px; width: min(92vw, 460px); }
+  dialog::backdrop { background: rgba(0,0,0,.45); }
+  dialog h3 { margin: 0 0 6px; }
+  .pix { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; word-break: break-all; background: var(--fundo); border: 1px dashed var(--bronze); border-radius: 9px; padding: 10px; }
+  .aviso { font-size: 12.5px; color: var(--cinza); }
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--tinta); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Grupo Modernos</h1>
+  <p id="sub"></p>
+  <nav>
+    <button data-aba="mes" class="on">Mês</button>
+    <button data-aba="pessoas">Pessoas</button>
+    <button data-aba="grupo">Grupo</button>
+    <button data-aba="dados">Dados</button>
+  </nav>
+</header>
+<main id="tela"></main>
+
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO DO GRUPO — a mesma do contrato (Anexos I e II)
+   ============================================================ */
+const GRUPO = {
+  nome: "Grupo Modernos",
+  organizador: "Jaisson",
+  pix: { nome: "JAISSON", cidade: "MINEIROS" },   // a chave é digitada no primeiro uso e fica só no celular
+  inicio: { mes: 9, ano: 2026 },          // parcela 1 vence em 10/09/2026
+  diaVencimento: 10,
+  valorInicial: 250, acrescimo: 5,
+  multa: 0.02, jurosMes: 0.01,
+  participantes: [
+    { nome: "Jaisson",  cotas: 2, cor: "#2a78d6" },
+    { nome: "Piterson", cotas: 2, cor: "#eb6834" },
+    { nome: "Bruno",    cotas: 2, cor: "#1baf7a" },
+    { nome: "Jociela",  cotas: 2, cor: "#eda100" },
+    { nome: "Diele",    cotas: 1, cor: "#e87ba4" },
+    { nome: "Emanuel",  cotas: 1, cor: "#008300" },
+    { nome: "Marciela", cotas: 1, cor: "#4a3aa7" },
+    { nome: "Eduardo",  cotas: 1, cor: "#e34948" },
+  ],
+  ordem: ["Diele","Piterson","Emanuel","Marciela","Jaisson","Piterson","Bruno","Bruno","Eduardo","Jociela","Jociela","Jaisson"],
+};
+
+/* ============================================================
+   ESTADO (fica só neste celular; use Dados > Backup)
+   ============================================================ */
+const CHAVE = "grupo-modernos-v1";
+const vazio = () => ({ pagamentos: {}, repasses: {}, telefones: {}, chavePix: "" });
+let E = (() => { try { return Object.assign(vazio(), JSON.parse(localStorage.getItem(CHAVE)) || {}); } catch { return vazio(); } })();
+const salvar = () => localStorage.setItem(CHAVE, JSON.stringify(E));
+
+/* ============================================================
+   REGRAS
+   ============================================================ */
+const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const P = Object.fromEntries(GRUPO.participantes.map(p => [p.nome, p]));
+const TOTAL_COTAS = GRUPO.participantes.reduce((s, p) => s + p.cotas, 0);
+const valorCota = i => GRUPO.valorInicial + GRUPO.acrescimo * i;
+const venc = i => { const m = GRUPO.inicio.mes - 1 + i; return new Date(GRUPO.inicio.ano + Math.floor(m / 12), m % 12, GRUPO.diaVencimento); };
+const nomeMes = i => { const d = venc(i); return `${MESES[d.getMonth()]} ${d.getFullYear()}`; };
+const dataBR = d => d.toLocaleDateString("pt-BR");
+const brl = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const hoje = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const iso = d => d.toISOString().slice(0, 10);
+const deIso = s => { const [a, m, d] = s.split("-").map(Number); return new Date(a, m - 1, d); };
+
+// quem paga no mês i: todos menos o contemplado (que não paga as próprias cotas)
+const pagantes = i => GRUPO.participantes.filter(p => p.nome !== GRUPO.ordem[i]);
+const devido = (i, nome) => valorCota(i) * P[nome].cotas;
+const recebe = i => (TOTAL_COTAS - P[GRUPO.ordem[i]].cotas) * valorCota(i);
+const pago = (i, nome) => E.pagamentos[i]?.[nome];
+
+// multa de 2% + juros de 1% ao mês, dia a dia, contados do dia seguinte ao vencimento
+function encargos(i, nome, ate = hoje()) {
+  const base = devido(i, nome);
+  const dias = Math.floor((ate - venc(i)) / 864e5);
+  if (dias <= 0) return { dias: 0, multa: 0, juros: 0, total: base };
+  const multa = +(base * GRUPO.multa).toFixed(2);
+  const juros = +(base * GRUPO.jurosMes / 30 * dias).toFixed(2);
+  return { dias, multa, juros, total: +(base + multa + juros).toFixed(2) };
+}
+
+function situacao(i, nome) {
+  if (pago(i, nome)) return { cls: "ok", txt: "pago" };
+  return hoje() > venc(i) ? { cls: "atraso", txt: "atrasado" } : { cls: "aberto", txt: "a pagar" };
+}
+
+// mês que aparece ao abrir: o primeiro que ainda tem pendência ou cujo vencimento não passou há mais de 5 dias
+function mesAtual() {
+  for (let i = 0; i < 12; i++) {
+    const pend = pagantes(i).some(p => !pago(i, p.nome));
+    const passou = (hoje() - venc(i)) / 864e5 > 5;
+    if (pend || !passou) return i;
+  }
+  return 11;
+}
+
+/* ============================================================
+   PIX copia-e-cola (padrão EMV do Banco Central, CRC16-CCITT)
+   ============================================================ */
+const emv = (id, v) => id + String(v.length).padStart(2, "0") + v;
+function crc16(s) {
+  let crc = 0xFFFF;
+  for (const b of new TextEncoder().encode(s)) {
+    crc ^= b << 8;
+    for (let k = 0; k < 8; k++) crc = crc & 0x8000 ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF;
+  }
+  return crc.toString(16).toUpperCase().padStart(4, "0");
+}
+function pix(valor, txid) {
+  const semAcento = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+  const conta = emv("00", "br.gov.bcb.pix") + emv("01", E.chavePix);
+  const p = emv("00", "01") + emv("26", conta) + emv("52", "0000") + emv("53", "986") +
+    emv("54", valor.toFixed(2)) + emv("58", "BR") + emv("59", semAcento(GRUPO.pix.nome).slice(0, 25)) +
+    emv("60", semAcento(GRUPO.pix.cidade).slice(0, 15)) + emv("62", emv("05", txid.replace(/[^A-Za-z0-9]/g, "").slice(0, 25))) + "6304";
+  return p + crc16(p);
+}
+
+/* ============================================================
+   MENSAGENS DE WHATSAPP (ele revisa e envia)
+   ============================================================ */
+function msgCobranca(i, nome) {
+  const e = encargos(i, nome), atras = e.dias > 0;
+  const cod = pix(e.total, `GM${String(i + 1).padStart(2, "0")}${nome}`);
+  let t = `oi ${nome.toLowerCase()}, tudo certo?\n` +
+    `${atras ? "a parcela do grupo modernos venceu" : "a parcela do grupo modernos vence"} dia ${dataBR(venc(i))}\n\n` +
+    `parcela ${i + 1}/12${P[nome].cotas > 1 ? ` (${P[nome].cotas} cotas)` : ""}: ${brl(devido(i, nome))}\n`;
+  if (atras) t += `multa 2%: ${brl(e.multa)}\njuros (${e.dias} dias): ${brl(e.juros)}\n`;
+  t += `*total: ${brl(e.total)}*\n\npix copia e cola, já com o valor certo:\n${cod}\n\nqualquer coisa me chama`;
+  return { texto: t, codigo: cod, total: e.total };
+}
+
+function msgExtrato(nome) {
+  const linhas = [];
+  let pagoTot = 0, falta = 0;
+  for (let i = 0; i < 12; i++) {
+    if (GRUPO.ordem[i] === nome) { linhas.push(`${nomeMes(i)}: *vc recebe ${brl(recebe(i))}*`); continue; }
+    const pg = pago(i, nome);
+    if (pg) { pagoTot += pg.valor; linhas.push(`${nomeMes(i)}: pago ${brl(pg.valor)} ✔`); }
+    else { falta += devido(i, nome); linhas.push(`${nomeMes(i)}: ${brl(devido(i, nome))}${hoje() > venc(i) ? " (atrasado)" : ""}`); }
+  }
+  return `extrato do grupo modernos - ${nome.toLowerCase()}\n\n${linhas.join("\n")}\n\njá pago: ${brl(pagoTot)}\nfalta: ${brl(falta)}`;
+}
+
+function abrirWhats(nome, texto) {
+  const tel = (E.telefones[nome] || "").replace(/\D/g, "");
+  const url = `https://wa.me/${tel ? (tel.length <= 11 ? "55" + tel : tel) : ""}?text=${encodeURIComponent(texto)}`;
+  window.open(url, "_blank");
+}
+
+/* ============================================================
+   TELAS
+   ============================================================ */
+let aba = "mes", mesSel = mesAtual();
+const tela = document.getElementById("tela");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function pedirChave() {
+  dlg.innerHTML = `<h3>Primeiro uso</h3>
+    <p class="aviso">Digite a sua chave PIX (CPF, só números). Ela fica guardada só neste celular e vai nas cobranças.</p>
+    <input inputmode="numeric" id="fChave" placeholder="00000000000">
+    <button class="btn largo pri" onclick="const v=document.getElementById('fChave').value.replace(/\\D/g,'');if(v.length<11){alert('CPF com 11 números');return}E.chavePix=v;salvar();dlg.close();toast('Chave salva')">Salvar</button>`;
+  dlg.showModal();
+}
+
+function render() {
+  document.getElementById("sub").textContent = `organizador ${GRUPO.organizador} · ${TOTAL_COTAS} cotas · pagamento todo dia ${GRUPO.diaVencimento}`;
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
+  ({ mes: telaMes, pessoas: telaPessoas, grupo: telaGrupo, dados: telaDados })[aba]();
+}
+
+function telaMes() {
+  const i = mesSel, c = GRUPO.ordem[i];
+  const lista = pagantes(i);
+  const recebido = lista.filter(p => pago(i, p.nome)).reduce((s, p) => s + devido(i, p.nome), 0);
+  const pct = Math.round(recebido / recebe(i) * 100);
+  const rep = E.repasses[i];
+  tela.innerHTML = `
+    <div class="mesnav">
+      <button onclick="mudaMes(-1)" ${i === 0 ? "disabled" : ""}>‹</button>
+      <div class="t"><b>${nomeMes(i)}</b><span>parcela ${i + 1}/12 · vence ${dataBR(venc(i))} · ${brl(valorCota(i))} por cota</span></div>
+      <button onclick="mudaMes(1)" ${i === 11 ? "disabled" : ""}>›</button>
+    </div>
+    <div class="card">
+      <div class="destaque">
+        <span class="bola" style="background:${P[c].cor}"></span>
+        <div><small>recebe este mês</small><b>${esc(c)}</b></div>
+        <div class="valor"><small>valor do repasse</small><b>${brl(recebe(i))}</b></div>
+      </div>
+      <div class="barra"><i style="width:${pct}%"></i></div>
+      <div class="legenda"><span>entrou ${brl(recebido)}</span><span>${pct}%</span></div>
+      ${rep
+        ? `<p class="aviso">✔ repassado em ${dataBR(deIso(rep.data))} (${brl(rep.valor)}) <button class="btn" onclick="desfazRepasse(${i})">desfazer</button></p>`
+        : `<button class="btn largo bronze" onclick="repassar(${i})">Registrar repasse para ${esc(c)}</button>`}
+    </div>
+    <div class="card">
+      ${lista.map(p => {
+        const s = situacao(i, p.nome), pg = pago(i, p.nome), e = encargos(i, p.nome);
+        const det = pg ? `pago em ${dataBR(deIso(pg.data))} · ${brl(pg.valor)}`
+          : `${brl(devido(i, p.nome))}${p.cotas > 1 ? ` (${p.cotas} cotas)` : ""}${e.dias > 0 ? ` · com atraso ${brl(e.total)}` : ""}`;
+        return `<div class="linha">
+          <span class="ponto" style="background:${p.cor}"></span>
+          <div class="quem"><b>${esc(p.nome)}</b><small>${det}</small></div>
+          <span class="selo ${s.cls}">${s.txt}</span>
+          <div class="acoes">
+            ${pg ? `<button class="btn" onclick="desfazPago(${i},'${p.nome}')">↺</button>`
+                 : `<button class="btn" onclick="cobrar(${i},'${p.nome}')">Cobrar</button><button class="btn pri" onclick="marcarPago(${i},'${p.nome}')">Pago</button>`}
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+    <p class="aviso">${esc(c)} não paga as próprias cotas neste mês. Atraso: multa de 2% + juros de 1% ao mês, calculados até hoje.</p>`;
+}
+
+function telaPessoas() {
+  tela.innerHTML = GRUPO.participantes.map(p => {
+    let pagoTot = 0, falta = 0, atras = 0;
+    for (let i = 0; i < 12; i++) {
+      if (GRUPO.ordem[i] === p.nome) continue;
+      const pg = pago(i, p.nome);
+      if (pg) pagoTot += pg.valor; else { falta += devido(i, p.nome); if (hoje() > venc(i)) atras++; }
+    }
+    const meses = GRUPO.ordem.map((o, i) => o === p.nome ? nomeMes(i) : null).filter(Boolean).join(" e ");
+    return `<div class="card">
+      <div class="destaque">
+        <span class="bola" style="background:${p.cor}"></span>
+        <div><b>${esc(p.nome)}</b><small>${p.cotas} cota${p.cotas > 1 ? "s" : ""} · recebe em ${meses}</small></div>
+        <div class="valor">${atras ? `<span class="selo atraso">${atras} atrasada${atras > 1 ? "s" : ""}</span>` : `<span class="selo ok">em dia</span>`}</div>
+      </div>
+      <div class="grade" style="margin-top:10px">
+        <div class="quadro"><b>${brl(pagoTot)}</b><small>já pagou</small></div>
+        <div class="quadro"><b>${brl(falta)}</b><small>falta pagar</small></div>
+      </div>
+      <label>WhatsApp (com DDD)</label>
+      <input inputmode="tel" placeholder="64 99999-9999" value="${esc(E.telefones[p.nome] || "")}" onchange="E.telefones['${p.nome}']=this.value;salvar()">
+      <button class="btn largo" onclick="abrirWhats('${p.nome}', msgExtrato('${p.nome}'))">Mandar extrato no WhatsApp</button>
+    </div>`;
+  }).join("");
+}
+
+function telaGrupo() {
+  const totalMov = Array.from({ length: 12 }, (_, i) => recebe(i)).reduce((a, b) => a + b, 0);
+  tela.innerHTML = `
+    <div class="grade">
+      <div class="quadro"><b>${TOTAL_COTAS}</b><small>cotas</small></div>
+      <div class="quadro"><b>${GRUPO.participantes.length}</b><small>participantes</small></div>
+      <div class="quadro"><b>${dataBR(venc(0))}</b><small>primeira parcela</small></div>
+      <div class="quadro"><b>${brl(totalMov)}</b><small>passam pelo grupo</small></div>
+    </div>
+    <h2>Calendário</h2>
+    <div class="card"><table>
+      <tr><th>Mês</th><th>Recebe</th><th class="r">Por cota</th><th class="r">Repasse</th></tr>
+      ${GRUPO.ordem.map((o, i) => `<tr onclick="mesSel=${i};aba='mes';render()">
+        <td>${nomeMes(i)}</td><td><span class="ponto" style="display:inline-block;background:${P[o].cor}"></span> ${esc(o)}${E.repasses[i] ? " ✔" : ""}</td>
+        <td class="r">${brl(valorCota(i))}</td><td class="r"><b>${brl(recebe(i))}</b></td></tr>`).join("")}
+    </table></div>
+    <p class="aviso">Toque num mês para abrir. ✔ = repasse já feito.</p>`;
+}
+
+function telaDados() {
+  tela.innerHTML = `
+    <div class="card">
+      <b>Backup</b>
+      <p class="aviso">Os dados ficam só neste celular. Faça backup toda vez que marcar pagamentos: o arquivo pode ser mandado para você mesmo no WhatsApp.</p>
+      <button class="btn largo pri" onclick="backup()">Salvar backup (.json)</button>
+      <label>Restaurar backup</label>
+      <input type="file" accept="application/json,.json" onchange="restaurar(this.files[0])">
+    </div>
+    <div class="card">
+      <b>Configuração do grupo</b>
+      <label>Chave PIX (CPF, só números)</label>
+      <input inputmode="numeric" value="${esc(E.chavePix)}" onchange="E.chavePix=this.value.replace(/\\D/g,'');salvar();toast('Chave salva')">
+      <p class="aviso">Recebedor: ${GRUPO.pix.nome}, ${GRUPO.pix.cidade}. Cotas, ordem e valores seguem o contrato. Para mudar, fale com o Dr. Piterson.</p>
+    </div>
+    <div class="card">
+      <b>Zerar tudo</b>
+      <p class="aviso">Apaga pagamentos, repasses e telefones deste celular.</p>
+      <button class="btn largo" onclick="zerar()">Zerar dados</button>
+    </div>`;
+}
+
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+const dlg = document.getElementById("dlg");
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 1800); }
+function mudaMes(d) { mesSel = Math.min(11, Math.max(0, mesSel + d)); render(); }
+
+function marcarPago(i, nome) {
+  const e = encargos(i, nome);
+  dlg.innerHTML = `<h3>${esc(nome)} pagou ${nomeMes(i)}</h3>
+    <label>Data do pagamento</label><input type="date" id="fData" value="${iso(hoje())}">
+    <label>Valor recebido</label><input inputmode="decimal" id="fValor" value="${e.total.toFixed(2).replace(".", ",")}">
+    <p class="aviso">${e.dias > 0 ? `Inclui multa e juros de ${e.dias} dias de atraso (${brl(e.multa + e.juros)}). Pode ajustar se combinou outro valor.` : "Valor da parcela, sem atraso."}</p>
+    <div class="acoes" style="margin-top:12px"><button class="btn" onclick="dlg.close()">Cancelar</button>
+    <button class="btn pri" style="flex:1" onclick="confirmaPago(${i},'${nome}')">Confirmar</button></div>`;
+  dlg.showModal();
+}
+function confirmaPago(i, nome) {
+  const data = document.getElementById("fData").value || iso(hoje());
+  const valor = parseFloat(document.getElementById("fValor").value.replace(/\./g, "").replace(",", ".")) || devido(i, nome);
+  (E.pagamentos[i] ||= {})[nome] = { data, valor };
+  salvar(); dlg.close(); render(); toast("Pagamento registrado");
+}
+function desfazPago(i, nome) {
+  if (!confirm(`Desmarcar o pagamento de ${nome} em ${nomeMes(i)}?`)) return;
+  delete E.pagamentos[i][nome]; salvar(); render();
+}
+function cobrar(i, nome) {
+  if (!E.chavePix) { pedirChave(); return; }
+  const m = msgCobranca(i, nome);
+  dlg.innerHTML = `<h3>Cobrança · ${esc(nome)}</h3>
+    <p class="aviso">${nomeMes(i)} · total ${brl(m.total)}</p>
+    <div class="pix" id="pixcod">${m.codigo}</div>
+    <div class="acoes" style="margin-top:12px">
+      <button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('pixcod').textContent).then(()=>toast('PIX copiado'))">Copiar PIX</button>
+      <button class="btn bronze" style="flex:1" onclick="abrirWhats('${nome}', msgCobranca(${i},'${nome}').texto)">Abrir WhatsApp</button>
+    </div>
+    ${E.telefones[nome] ? "" : `<p class="aviso">Sem número salvo: o WhatsApp vai pedir para escolher o contato. Salve o número na aba Pessoas.</p>`}
+    <button class="btn largo" onclick="dlg.close()">Fechar</button>`;
+  dlg.showModal();
+}
+function repassar(i) {
+  const c = GRUPO.ordem[i];
+  const faltam = pagantes(i).filter(p => !pago(i, p.nome)).map(p => p.nome);
+  if (faltam.length && !confirm(`Ainda falta pagamento de ${faltam.join(", ")}. Registrar o repasse mesmo assim?`)) return;
+  const entrou = pagantes(i).filter(p => pago(i, p.nome)).reduce((s, p) => s + devido(i, p.nome), 0);
+  E.repasses[i] = { data: iso(hoje()), valor: faltam.length ? entrou : recebe(i) };
+  salvar(); render(); toast(`Repasse para ${c} registrado`);
+}
+function desfazRepasse(i) { if (confirm("Desfazer o registro do repasse?")) { delete E.repasses[i]; salvar(); render(); } }
+function backup() {
+  const blob = new Blob([JSON.stringify({ grupo: GRUPO.nome, salvo_em: new Date().toISOString(), ...E }, null, 2)], { type: "application/json" });
+  const f = new File([blob], `grupo-modernos-backup-${iso(hoje())}.json`, { type: "application/json" });
+  if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], title: "Backup Grupo Modernos" }).catch(() => {}); return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = f.name; a.click();
+}
+function restaurar(arq) {
+  if (!arq) return;
+  arq.text().then(t => {
+    const d = JSON.parse(t);
+    if (!d.pagamentos) throw new Error();
+    if (!confirm("Substituir os dados deste celular pelo backup?")) return;
+    E = Object.assign(vazio(), { pagamentos: d.pagamentos, repasses: d.repasses || {}, telefones: d.telefones || {}, chavePix: d.chavePix || E.chavePix });
+    salvar(); render(); toast("Backup restaurado");
+  }).catch(() => alert("Arquivo de backup inválido."));
+}
+function zerar() { if (confirm("Apagar todos os dados deste celular?") && confirm("Tem certeza? Faça um backup antes.")) { E = vazio(); salvar(); render(); } }
+
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => { aba = b.dataset.aba; if (aba === "mes") mesSel = mesSel ?? mesAtual(); render(); });
+if (location.hash) aba = location.hash.slice(1);
+render();
+if (!E.chavePix) pedirChave();
+</script>
+</body>
+</html>
